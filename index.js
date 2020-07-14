@@ -1,7 +1,15 @@
 require("dotenv").config();
 const discord = require("discord.js");
 const axios = require("axios");
+const express = require("express");
 const bot = new discord.Client();
+
+const app = express();
+const port = process.env.PORT || 3000;
+
+app.use(express.static("public"));
+
+app.listen(port, () => console.log(`Listening on port ${port}`));
 
 const TOKEN = process.env.TOKEN;
 const PROXY = "https://cors-anywhere.herokuapp.com/"; //CORS

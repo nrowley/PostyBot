@@ -4,6 +4,7 @@
   "description": "a discord bot that allows you to make http requests!",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "dev": "nodemon index"
   },
   "author": "nelson rowley",
