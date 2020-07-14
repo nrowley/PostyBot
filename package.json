@@ -1,13 +1,13 @@
 {
-  "name": "getdis",
+  "name": "postybot",
   "version": "1.0.0",
   "description": "a discord bot that allows you to make http requests!",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "nelson rowley",
+  "license": "MIT",
   "devDependencies": {
     "nodemon": "^2.0.4"
   },
@@ -16,5 +16,17 @@
     "discord.js": "^12.2.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nelzex/PostyBot.git"
+  },
+  "keywords": [
+    "rest",
+    "discord.js"
+  ],
+  "bugs": {
+    "url": "https://github.com/nelzex/PostyBot/issues"
+  },
+  "homepage": "https://github.com/nelzex/PostyBot#readme"
 }
