@@ -4,12 +4,12 @@ a discord bot that allows developers to make HTTP calls to REST APIs and other s
 ## Commands
 
 !help , provides help and guidances as to how to use the bot
-## GET 
+### GET 
 usage: GET {url}
-## POST 
+### POST 
 usage: POST {url} {multipart/form-data, application/x-www-form-urlencoded, application/json}
-## PUT 
+### PUT 
 usage: PUT {url} {application/x-www-form-urlencoded, application/json}
-## DELETE 
+### DELETE 
 usage: DELETE {url}
 
