@@ -14,16 +14,19 @@ bot.on("ready", () => {
 
 bot.on("message", (msg) => {
   const request = msg.content.trim().split(" ");
-  const verb = request[0];
+  const verb = request[0].toUpperCase();
   const url = prefixUrl(request[1]);
   const message = request[2]; //message to POST / PUT
+
+  if (verb == "!help") {
+    showHelp(msg);
+  }
 
   if (verb === "GET") {
     axios
       .get(url)
       .then((response) => {
         //console.log(JSON.stringify(response.data, null, 4).length);
-
         //splitting message if longer than 2000 chars
         if (JSON.stringify(response.data, null, 4).length > 2000) {
           //split
@@ -54,7 +57,10 @@ bot.on("message", (msg) => {
       })
       .catch((error) => {
         console.log(error);
-        msg.reply("🔴 there was an error fetching your response 🔴");
+        msg.reply("🔴 there was an error fetching your response");
+        msg.channel.send(
+          `Error : ${error.response.data} Status : ${error.response.status}`
+        );
       });
   } else if (verb === "POST") {
     axios
@@ -87,6 +93,82 @@ bot.on("message", (msg) => {
       .catch((error) => {
         console.log(error);
         msg.reply("🔴 There was an error fetching your response");
+        msg.channel.send(
+          `Error : ${error.response.data} Status : ${error.response.status}`
+        );
+      });
+  } else if (verb == "PUT") {
+    axios
+      .put(url, JSON.stringify(message))
+      .then((response) => {
+        if (JSON.stringify(response.data, null, 4).length > 2000) {
+          const stringList = splitMessage(
+            JSON.stringify(response.data, null, 4)
+          );
+          msg.reply(
+            "\n ⚠️ The response exceed discord message length \n 🚚 Therefore contents had to be split"
+          );
+          msg.channel.send(stringList[0]);
+          msg.channel.send(stringList[1]);
+          console.log(
+            `Sent response to user ${
+              msg.member.user.tag
+            }: response ${JSON.stringify(response.data, null, 4)}`
+          );
+        } else {
+          msg.reply("PUT 📦 \n🚚 Response Recieved:");
+          msg.channel.send(JSON.stringify(response.data, null, 4));
+          console.log(
+            `Sent response to user ${
+              msg.member.user.tag
+            }: response ${JSON.stringify(response.data, null, 4)}`
+          );
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        msg.reply("🔴 There was an error fetching your response");
+        msg.channel.send(
+          `Error : ${error.response.data} Status : ${error.response.status}`
+        );
+      });
+  } else if (verb == "DELETE") {
+    axios
+      .delete(url)
+      .then((response) => {
+        if (JSON.stringify(response.data, null, 4).length > 2000) {
+          //split
+          const stringList = splitMessage(
+            JSON.stringify(response.data, null, 4)
+          );
+
+          msg.reply(
+            "\n ⚠️ The contents exceeded discord message length \n 🚚 Therefore contents had to be split"
+          );
+          msg.channel.send(stringList[0]);
+          msg.channel.send(stringList[1]);
+          console.log(
+            `Sent response to user ${
+              msg.member.user.tag
+            }: response ${JSON.stringify(response.data, null, 4)}`
+          );
+        } else {
+          //content doesnt exceed length limit so send.
+          msg.reply(" DELETE 🗑 \n 🚚 Response Recieved:");
+          msg.channel.send(JSON.stringify(response.data, null, 4));
+          console.log(
+            `Sent response to user ${
+              msg.member.user.tag
+            }: response ${JSON.stringify(response.data, null, 4)}`
+          );
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        msg.reply("There was an error");
+        msg.channel.send(
+          `Error : ${error.response.data} Status : ${error.response.status}`
+        );
       });
   }
 });
@@ -104,5 +186,15 @@ function splitMessage(str) {
 
 //function to infer https://..
 function prefixUrl(url) {
-  return url.includes("https://") ? url : "https://" + url;
+  if (url !== undefined) {
+    return url.includes("https://") ? url : "https://" + url;
+  } else {
+    return url;
+  }
+}
+
+function showHelp(msg) {
+  msg.reply(
+    "\n ⚙️ PostyBot Commands \n \n 🛩 GET 'url' \n ✉️ POST 'url' 'json/raw-content' "
+  );
 }
