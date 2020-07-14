@@ -1,7 +1,8 @@
 # PostyBot 
 a discord bot that allows developers to make HTTP calls to REST APIs and other services!
 
-## [Add PostyBot to your server!] (https://discord.com/oauth2/authorize?client_id=732583368423768095&permissions=67584&scope=bot)
+## Add PostyBot to your server! 
+https://discord.com/oauth2/authorize?client_id=732583368423768095&permissions=67584&scope=bot
 
 ## Commands
 
