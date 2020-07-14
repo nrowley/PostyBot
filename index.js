@@ -104,5 +104,5 @@ function splitMessage(str) {
 
 //function to infer https://..
 function prefixUrl(url) {
-  return url.Contains("https://") ? url : "https://" + url;
+  return url.includes("https://") ? url : "https://" + url;
 }
