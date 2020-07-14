@@ -15,7 +15,7 @@ bot.on("ready", () => {
 bot.on("message", (msg) => {
   const request = msg.content.trim().split(" ");
   const verb = request[0];
-  const url = request[1];
+  const url = prefixUrl(request[1]);
   const message = request[2]; //message to POST / PUT
 
   if (verb === "GET") {
@@ -43,7 +43,7 @@ bot.on("message", (msg) => {
           );
         } else {
           //content doesnt exceed length limit so send.
-          msg.reply("🚚 Response Recieved:");
+          msg.reply(" GET 🛩 \n 🚚 Response Recieved:");
           msg.channel.send(JSON.stringify(response.data, null, 4));
           console.log(
             `Sent response to user ${
@@ -75,7 +75,7 @@ bot.on("message", (msg) => {
             }: response ${JSON.stringify(response.data, null, 4)}`
           );
         } else {
-          msg.reply("🚚 Response Recieved:");
+          msg.reply("POST ✉️ \n🚚 Response Recieved:");
           msg.channel.send(JSON.stringify(response.data, null, 4));
           console.log(
             `Sent response to user ${
@@ -100,4 +100,9 @@ function splitMessage(str) {
   var stringList = [stringFirst, stringLast];
 
   return stringList;
+}
+
+//function to infer https://..
+function prefixUrl(url) {
+  return url.Contains("https://") ? url : "https://" + url;
 }
